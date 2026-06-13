@@ -6,134 +6,111 @@
   <title>Beauty Salon Management</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
   <style>
-    :root {
-      --color-background-primary: #ffffff;
-      --color-background-secondary: #f5f5f5;
-      --color-text-primary: #111111;
-      --color-text-secondary: #6b7280;
-      --color-border-tertiary: #e5e7eb;
-      --color-border-secondary: #d1d5db;
-      --border-radius-md: 8px;
-      --border-radius-lg: 12px;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--color-background-primary);
-      color: var(--color-text-primary);
-      padding: 1.5rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    input, select, textarea {
-      border: 0.5px solid var(--color-border-secondary);
-      border-radius: var(--border-radius-md);
-      padding: 0 10px;
-      height: 36px;
-      font-size: 13px;
-      color: var(--color-text-primary);
-      background: var(--color-background-primary);
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: #6b7280;
-    }
-    textarea { padding: 8px 10px; height: auto; }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    .header { padding: 1.5rem 0 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 1.25rem; }
-    .header h1 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
-    .header p { font-size: 14px; color: var(--color-text-secondary); margin-top: 4px; }
-    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.25rem; }
-    .stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 16px; }
-    .stat-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
-    .stat-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
-    .section-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    .toolbar { display: flex; gap: 10px; margin-bottom: 1.25rem; align-items: center; }
-    .toolbar input { flex: 1; }
-    .add-btn { background: var(--color-text-primary); color: var(--color-background-primary); border: none; border-radius: var(--border-radius-md); padding: 0 16px; height: 36px; font-size: 14px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
-    .add-btn:hover { opacity: .85; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 12px; margin-bottom: 1.75rem; }
-    .customer-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; transition: border-color .15s; }
-    .customer-card:hover { border-color: var(--color-border-secondary); }
-    .customer-card.status-done { border-left: 3px solid #1D9E75; }
-    .customer-card.status-cancelled { border-left: 3px solid #E24B4A; opacity: .65; }
-    .customer-card.status-pending { border-left: 3px solid var(--color-border-tertiary); }
-    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-    .card-identity { display: flex; align-items: center; gap: 10px; }
-    .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
-    .card-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); line-height: 1.2; }
-    .card-phone { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
-    .status-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; flex-shrink: 0; }
-    .sp-done { background: #E1F5EE; color: #0F6E56; }
-    .sp-cancelled { background: #FCEBEB; color: #A32D2D; }
-    .sp-pending { background: var(--color-background-secondary); color: var(--color-text-secondary); }
-    .card-svcs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; background: #E1F5EE; color: #0F6E56; }
-    .card-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 10px; }
-    .meta-item { display: flex; flex-direction: column; gap: 2px; }
-    .meta-label { font-size: 11px; color: var(--color-text-secondary); }
-    .meta-val { font-size: 12px; color: var(--color-text-primary); }
-    .meta-price { color: #0F6E56; font-weight: 500; }
-    .card-note { font-size: 12px; color: var(--color-text-secondary); background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 6px 10px; margin-bottom: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-actions { display: flex; gap: 5px; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 10px; }
-    .act-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; height: 26px; border-radius: var(--border-radius-md); font-size: 11px; cursor: pointer; border: 0.5px solid var(--color-border-secondary); background: none; color: var(--color-text-secondary); }
-    .act-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
-    .act-btn.done:hover { border-color: #1D9E75; color: #1D9E75; background: #E1F5EE; }
-    .act-btn.cancel-act:hover { border-color: #E24B4A; color: #E24B4A; background: #FCEBEB; }
-    .act-btn.undone { border-color: var(--color-border-secondary); }
-    .act-btn.undone:hover { border-color: #1D9E75; color: #1D9E75; background: #E1F5EE; }
-    .empty-state { text-align: center; padding: 2.5rem; color: var(--color-text-secondary); font-size: 14px; }
-    .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 0.25rem 0 1.5rem; }
-    .filter-bar { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 8px; margin-bottom: 8px; align-items: end; }
-    .filter-row2 { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-bottom: 10px; align-items: end; }
-    .fg label { display: block; font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
-    .fg select, .fg input { width: 100%; }
-    .clear-btn { background: none; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 0 12px; height: 36px; font-size: 13px; cursor: pointer; color: var(--color-text-secondary); }
-    .clear-btn:hover { background: var(--color-background-secondary); }
-    .filter-count { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 10px; }
-    .filter-count span { font-weight: 500; color: var(--color-text-primary); }
-    .table-wrap { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; margin-bottom: 1.75rem; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
-    thead tr { background: var(--color-background-secondary); }
-    th { text-align: left; padding: 9px 12px; font-weight: 500; font-size: 12px; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); }
-    td { padding: 9px 12px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: middle; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: var(--color-background-secondary); }
-    .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 100; align-items: center; justify-content: center; }
-    .modal-bg.open { display: flex; }
-    .modal { background: var(--color-background-primary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 1.5rem; width: 500px; max-width: 96vw; max-height: 90vh; overflow-y: auto; }
-    .modal h2 { font-size: 16px; font-weight: 500; margin-bottom: 1.25rem; }
-    .form-row { margin-bottom: 13px; }
-    .form-row label { display: block; font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
-    .form-row input, .form-row textarea { width: 100%; }
-    .form-row textarea { height: 60px; resize: vertical; }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .err { font-size: 12px; color: #E24B4A; margin-top: 4px; display: none; }
-    .warn { font-size: 12px; color: #BA7517; margin-top: 4px; display: none; background: #FAEEDA; padding: 6px 10px; border-radius: var(--border-radius-md); }
-    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.25rem; }
-    .modal-footer button { padding: 0 18px; height: 36px; border-radius: var(--border-radius-md); font-size: 14px; cursor: pointer; }
-    .btn-cancel { background: none; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-primary); }
-    .btn-save { background: var(--color-text-primary); color: var(--color-background-primary); border: none; }
-    .btn-save:hover { opacity: .85; }
-    .svc-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-    .svc-chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: 20px; cursor: pointer; font-size: 12px; color: var(--color-text-primary); background: var(--color-background-primary); user-select: none; }
-    .svc-chip:hover { background: var(--color-background-secondary); }
-    .svc-chip.selected { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; }
-    .svc-chip.custom-chip { position: relative; }
-    .svc-chip .remove-svc { display: none; margin-left: 2px; font-size: 11px; color: inherit; background: none; border: none; cursor: pointer; padding: 0; line-height: 1; }
-    .svc-chip.selected .remove-svc { display: inline; }
-    .add-svc-row { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
-    .add-svc-row input { flex: 1; height: 30px; font-size: 12px; }
-    .add-svc-btn { height: 30px; padding: 0 12px; font-size: 12px; background: none; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; color: var(--color-text-secondary); white-space: nowrap; display: flex; align-items: center; gap: 4px; }
-    .add-svc-btn:hover { background: var(--color-background-secondary); }
+    :root{--color-background-primary:#ffffff;--color-background-secondary:#f5f5f5;--color-text-primary:#111111;--color-text-secondary:#6b7280;--color-border-tertiary:#e5e7eb;--color-border-secondary:#d1d5db;--border-radius-md:8px;--border-radius-lg:12px;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-primary);color:var(--color-text-primary);padding:1.5rem 2rem;max-width:1200px;margin:0 auto;}
+    input,select,textarea{border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:0 10px;height:36px;font-size:13px;color:var(--color-text-primary);background:var(--color-background-primary);outline:none;}
+    input:focus,select:focus,textarea:focus{border-color:#6b7280;}
+    textarea{padding:8px 10px;height:auto;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    .header{padding:1.5rem 0 1rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.25rem;}
+    .header h1{font-size:20px;font-weight:500;}
+    .header p{font-size:14px;color:var(--color-text-secondary);margin-top:4px;}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;}
+    .stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 16px;}
+    .stat-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;}
+    .stat-val{font-size:22px;font-weight:500;}
+    .section-title{font-size:15px;font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+    .toolbar{display:flex;gap:10px;margin-bottom:1.25rem;align-items:center;}
+    .toolbar input{flex:1;}
+    .add-btn{background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-md);padding:0 16px;height:36px;font-size:14px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+    .add-btn:hover{opacity:.85;}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:1.75rem;}
+    .customer-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;transition:border-color .15s;}
+    .customer-card:hover{border-color:var(--color-border-secondary);}
+    .customer-card.status-done{border-left:3px solid #1D9E75;}
+    .customer-card.status-pending{border-left:3px solid var(--color-border-tertiary);}
+    .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .card-identity{display:flex;align-items:center;gap:10px;}
+    .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;}
+    .card-name{font-size:14px;font-weight:500;line-height:1.2;}
+    .card-phone{font-size:12px;color:var(--color-text-secondary);margin-top:2px;}
+    .status-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;flex-shrink:0;}
+    .sp-done{background:#E1F5EE;color:#0F6E56;}
+    .sp-pending{background:var(--color-background-secondary);color:var(--color-text-secondary);}
+    .card-svcs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+    .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;background:#E1F5EE;color:#0F6E56;}
+    .card-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-bottom:10px;}
+    .meta-item{display:flex;flex-direction:column;gap:2px;}
+    .meta-label{font-size:11px;color:var(--color-text-secondary);}
+    .meta-val{font-size:12px;}
+    .meta-price{color:#0F6E56;font-weight:500;}
+    .card-note{font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:6px 10px;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .card-actions{display:flex;gap:5px;border-top:0.5px solid var(--color-border-tertiary);padding-top:10px;}
+    .act-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:26px;border-radius:var(--border-radius-md);font-size:11px;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:none;color:var(--color-text-secondary);}
+    .act-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary);}
+    .act-btn.done:hover{border-color:#1D9E75;color:#1D9E75;background:#E1F5EE;}
+    .act-btn.undone:hover{border-color:#1D9E75;color:#1D9E75;background:#E1F5EE;}
+    .act-btn.delete-act:hover{border-color:#E24B4A;color:#E24B4A;background:#FCEBEB;}
+    .empty-state{text-align:center;padding:2.5rem;color:var(--color-text-secondary);font-size:14px;}
+    .divider{height:0.5px;background:var(--color-border-tertiary);margin:0.25rem 0 1.5rem;}
+    .filter-bar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end;}
+    .filter-row2{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:10px;align-items:end;}
+    .fg label{display:block;font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;}
+    .fg select,.fg input{width:100%;}
+    .clear-btn{background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:0 12px;height:36px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);}
+    .clear-btn:hover{background:var(--color-background-secondary);}
+    .filter-count{font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;}
+    .filter-count span{font-weight:500;color:var(--color-text-primary);}
+    .table-wrap{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:1.75rem;}
+    table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
+    thead tr{background:var(--color-background-secondary);}
+    th{text-align:left;padding:9px 12px;font-weight:500;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);}
+    td{padding:9px 12px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    tbody tr:last-child td{border-bottom:none;}
+    tbody tr:hover{background:var(--color-background-secondary);}
+    .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;align-items:center;justify-content:center;}
+    .modal-bg.open{display:flex;}
+    .modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:1.5rem;width:500px;max-width:96vw;max-height:90vh;overflow-y:auto;}
+    .modal h2{font-size:16px;font-weight:500;margin-bottom:1.25rem;}
+    .form-row{margin-bottom:13px;}
+    .form-row label{display:block;font-size:13px;color:var(--color-text-secondary);margin-bottom:4px;}
+    .form-row input,.form-row textarea{width:100%;}
+    .form-row textarea{height:60px;resize:vertical;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .err{font-size:12px;color:#E24B4A;margin-top:4px;display:none;}
+    .warn{font-size:12px;color:#BA7517;margin-top:4px;display:none;background:#FAEEDA;padding:6px 10px;border-radius:var(--border-radius-md);}
+    .modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:1.25rem;}
+    .modal-footer button{padding:0 18px;height:36px;border-radius:var(--border-radius-md);font-size:14px;cursor:pointer;}
+    .btn-cancel{background:none;border:0.5px solid var(--color-border-secondary);color:var(--color-text-primary);}
+    .btn-save{background:var(--color-text-primary);color:var(--color-background-primary);border:none;}
+    .btn-save:hover{opacity:.85;}
+    .svc-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+    .svc-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:0.5px solid var(--color-border-secondary);border-radius:20px;cursor:pointer;font-size:12px;color:var(--color-text-primary);background:var(--color-background-primary);user-select:none;}
+    .svc-chip:hover{background:var(--color-background-secondary);}
+    .svc-chip.selected{background:#E1F5EE;border-color:#1D9E75;color:#0F6E56;}
+    .svc-chip .remove-svc{display:none;margin-left:2px;font-size:11px;color:inherit;background:none;border:none;cursor:pointer;padding:0;line-height:1;}
+    .svc-chip.selected .remove-svc{display:inline;}
+    .add-svc-row{display:flex;gap:6px;margin-top:8px;align-items:center;}
+    .add-svc-row input{flex:1;height:30px;font-size:12px;}
+    .add-svc-btn{height:30px;padding:0 12px;font-size:12px;background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);white-space:nowrap;display:flex;align-items:center;gap:4px;}
+    .add-svc-btn:hover{background:var(--color-background-secondary);}
+    /* confirm delete overlay */
+    .confirm-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;align-items:center;justify-content:center;}
+    .confirm-bg.open{display:flex;}
+    .confirm-box{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:1.5rem;width:360px;max-width:94vw;}
+    .confirm-box h3{font-size:15px;font-weight:500;margin-bottom:6px;}
+    .confirm-box p{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem;line-height:1.5;}
+    .confirm-actions{display:flex;gap:10px;justify-content:flex-end;}
+    .confirm-actions button{padding:0 18px;height:34px;border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;}
+    .btn-no{background:none;border:0.5px solid var(--color-border-secondary);color:var(--color-text-primary);}
+    .btn-yes-del{background:#E24B4A;color:#fff;border:none;}
+    .btn-yes-del:hover{opacity:.85;}
   </style>
 </head>
 <body>
 
-<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Beauty Salon Customer Management System</h2>
-
 <div class="header">
-  <h1><i class="ti ti-sparkles" aria-hidden="true" style="font-size:18px;vertical-align:-2px;margin-right:8px;"></i>Beauty Salon Management</h1>
+  <h1><i class="ti ti-sparkles" style="font-size:18px;vertical-align:-2px;margin-right:8px;"></i>Beauty Salon Management</h1>
   <p>Record customer details, services and appointment times</p>
 </div>
 
@@ -144,23 +121,23 @@
   <div class="stat"><div class="stat-label">Revenue (RM)</div><div class="stat-val" id="stat-revenue">0</div></div>
 </div>
 
-<div class="section-title"><i class="ti ti-users" aria-hidden="true" style="font-size:16px;"></i>Section 1 — Customer list</div>
+<div class="section-title"><i class="ti ti-users" style="font-size:16px;"></i>Section 1 — Customer list</div>
 <div class="toolbar">
   <input type="text" id="search" placeholder="Search by name or phone number..." oninput="renderS1()">
-  <button class="add-btn" onclick="openModal()"><i class="ti ti-plus" aria-hidden="true"></i>Add customer</button>
+  <button class="add-btn" onclick="openModal()"><i class="ti ti-plus"></i>Add customer</button>
 </div>
 <div id="card-grid" class="card-grid"></div>
 <div class="empty-state" id="empty-s1" style="display:none;">No records yet. Click "Add customer" to get started.</div>
 
 <div class="divider"></div>
 
-<div class="section-title"><i class="ti ti-history" aria-hidden="true" style="font-size:16px;"></i>Section 2 — Appointment records</div>
+<div class="section-title"><i class="ti ti-history" style="font-size:16px;"></i>Section 2 — Appointment records</div>
 <div class="filter-bar">
   <div class="fg"><label>Search name / notes</label><input type="text" id="f-search" placeholder="Enter keyword..." oninput="renderS2()"></div>
   <div class="fg"><label>Phone number</label><select id="f-phone-filter" onchange="renderS2()"><option value="">All customers</option></select></div>
   <div class="fg"><label>Service</label><select id="f-svc-filter" onchange="renderS2()"><option value="">All services</option></select></div>
-  <div class="fg"><label>Status</label><select id="f-status-filter" onchange="renderS2()"><option value="">All statuses</option><option value="pending">Pending</option><option value="done">Completed</option><option value="cancelled">Cancelled</option></select></div>
-  <button class="clear-btn" onclick="clearFilters()"><i class="ti ti-x" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:2px;"></i>Clear</button>
+  <div class="fg"><label>Status</label><select id="f-status-filter" onchange="renderS2()"><option value="">All statuses</option><option value="pending">Pending</option><option value="done">Completed</option></select></div>
+  <button class="clear-btn" onclick="clearFilters()"><i class="ti ti-x" style="font-size:12px;vertical-align:-1px;margin-right:2px;"></i>Clear</button>
 </div>
 <div class="filter-row2">
   <div class="fg"><label>Appointment from</label><input type="datetime-local" id="f-date-from" onchange="renderS2()"></div>
@@ -171,16 +148,16 @@
 <div class="table-wrap">
   <table>
     <thead><tr>
-      <th style="width:12%">Name</th><th style="width:14%">Phone</th>
-      <th style="width:22%">Services</th><th style="width:16%">Appointment</th>
-      <th style="width:10%">Price (RM)</th><th style="width:9%">Status</th><th style="width:17%">Notes</th>
+      <th style="width:12%">Name</th><th style="width:13%">Phone</th>
+      <th style="width:21%">Services</th><th style="width:15%">Appointment</th>
+      <th style="width:10%">Price (RM)</th><th style="width:9%">Status</th><th style="width:14%">Notes</th><th style="width:6%">Action</th>
     </tr></thead>
     <tbody id="tbody-s2"></tbody>
   </table>
   <div class="empty-state" id="empty-s2" style="display:none;">No records match the selected filters.</div>
 </div>
 
-<!-- Modal -->
+<!-- Edit/Add Modal -->
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
     <h2 id="modal-title">Add customer record</h2>
@@ -193,7 +170,7 @@
       <div class="svc-grid" id="svc-grid"></div>
       <div class="add-svc-row">
         <input type="text" id="new-svc-input" placeholder="Add custom service..." onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomService();}">
-        <button class="add-svc-btn" onclick="addCustomService()"><i class="ti ti-plus" aria-hidden="true" style="font-size:13px;"></i>Add</button>
+        <button class="add-svc-btn" onclick="addCustomService()"><i class="ti ti-plus" style="font-size:13px;"></i>Add</button>
       </div>
       <div class="err" id="err-service">Please select at least one service</div>
     </div>
@@ -209,7 +186,22 @@
   </div>
 </div>
 
+<!-- Delete Confirm Modal -->
+<div class="confirm-bg" id="confirm-bg">
+  <div class="confirm-box">
+    <h3>Delete record?</h3>
+    <p id="confirm-msg">This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn-no" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-yes-del" onclick="confirmDelete()"><i class="ti ti-trash" style="font-size:13px;vertical-align:-1px;margin-right:4px;"></i>Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
+const STORAGE_KEY = 'beauty_salon_records';
+const CUSTOM_SVC_KEY = 'beauty_salon_custom_svcs';
+
 const DEFAULT_SERVICES=[
   {name:'Facial treatment',icon:'ti-face-id'},{name:'Lash extension',icon:'ti-eye'},
   {name:'Eyebrow shaping',icon:'ti-brush'},{name:'Manicure',icon:'ti-nail'},
@@ -217,9 +209,34 @@ const DEFAULT_SERVICES=[
   {name:'Deep cleansing',icon:'ti-droplet'},{name:'Bust care',icon:'ti-heart'},
   {name:'Body massage',icon:'ti-massage'},
 ];
-let customServices=[];
-let records=[],editId=null,selectedSvcs=[],timeBlocked=false;
 
+let customServices = JSON.parse(localStorage.getItem(CUSTOM_SVC_KEY)||'[]');
+let records = [];
+let editId=null, selectedSvcs=[], timeBlocked=false, deleteTargetId=null;
+
+// ── LocalStorage helpers ──────────────────────────────────────
+function saveToStorage(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  localStorage.setItem(CUSTOM_SVC_KEY, JSON.stringify(customServices));
+}
+function loadFromStorage(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{ records = JSON.parse(raw); }catch(e){ records=[]; }
+  } else {
+    // seed demo data on first load
+    records=[
+      {id:uid(),name:'Sarah Lim',phone:'012-3456789',services:['Facial treatment','Skin whitening'],datetime:'2026-06-14T10:00',price:180,note:'Dry skin — use hydrating range',status:'done',doneAt:Date.now()-25*3600*1000},
+      {id:uid(),name:'Mei Ling Chan',phone:'016-8765432',services:['Lash extension'],datetime:'2026-06-14T14:30',price:120,note:'',status:'pending',doneAt:null},
+      {id:uid(),name:'Amy Wong',phone:'011-2233445',services:['Manicure','Eyebrow shaping'],datetime:'2026-06-15T11:00',price:95,note:'Thin nails — handle gently',status:'pending',doneAt:null},
+      {id:uid(),name:'Sarah Lim',phone:'012-3456789',services:['Deep cleansing'],datetime:'2026-05-20T10:00',price:80,note:'',status:'done',doneAt:Date.now()-2*3600*1000},
+      {id:uid(),name:'Mei Ling Chan',phone:'016-8765432',services:['Facial treatment','Hair removal'],datetime:'2026-05-10T15:00',price:160,note:'',status:'done',doneAt:Date.now()-10*3600*1000},
+    ];
+    saveToStorage();
+  }
+}
+
+// ── Utilities ─────────────────────────────────────────────────
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
 function fmtDt(s){if(!s)return'';const d=new Date(s);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 function initials(name){const p=name.trim().split(' ');return p.length>=2?(p[0][0]+p[1][0]).toUpperCase():name.slice(0,2).toUpperCase();}
@@ -227,21 +244,30 @@ function avatarColor(name){
   const c=[{bg:'#E1F5EE',color:'#085041'},{bg:'#E6F1FB',color:'#0C447C'},{bg:'#EEEDFE',color:'#3C3489'},{bg:'#FBEAF0',color:'#72243E'},{bg:'#FAEEDA',color:'#633806'},{bg:'#EAF3DE',color:'#27500A'}];
   let h=0;for(const ch of name)h=(h*31+ch.charCodeAt(0))%c.length;return c[h];
 }
+
+// Section 1 visibility: pending always shows; done shows only within 24h of doneAt
+function showInS1(r){
+  if(r.status==='pending') return true;
+  if(r.status==='done' && r.doneAt){
+    return (Date.now() - r.doneAt) < 24*3600*1000;
+  }
+  return false;
+}
+
 function statusPill(s){
-  if(s==='done') return`<span class="status-pill sp-done"><i class="ti ti-check" style="font-size:10px;" aria-hidden="true"></i>Completed</span>`;
-  if(s==='cancelled') return`<span class="status-pill sp-cancelled"><i class="ti ti-x" style="font-size:10px;" aria-hidden="true"></i>Cancelled</span>`;
-  return`<span class="status-pill sp-pending"><i class="ti ti-clock" style="font-size:10px;" aria-hidden="true"></i>Pending</span>`;
+  if(s==='done') return`<span class="status-pill sp-done"><i class="ti ti-check" style="font-size:10px;"></i>Completed</span>`;
+  return`<span class="status-pill sp-pending"><i class="ti ti-clock" style="font-size:10px;"></i>Pending</span>`;
 }
 function statusBadgeS2(s){
-  if(s==='done') return`<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;background:#E1F5EE;color:#085041;"><i class="ti ti-check" style="font-size:10px;" aria-hidden="true"></i>Completed</span>`;
-  if(s==='cancelled') return`<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;background:#FCEBEB;color:#791F1F;"><i class="ti ti-x" style="font-size:10px;" aria-hidden="true"></i>Cancelled</span>`;
+  if(s==='done') return`<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;background:#E1F5EE;color:#085041;"><i class="ti ti-check" style="font-size:10px;"></i>Completed</span>`;
   return`<span style="padding:2px 7px;border-radius:20px;font-size:11px;background:#f5f5f5;color:#6b7280;">Pending</span>`;
 }
 
+// ── Service chips ─────────────────────────────────────────────
 function addCustomService(){
   const inp=document.getElementById('new-svc-input');
   const name=inp.value.trim();
-  if(!name) return;
+  if(!name)return;
   const allNames=[...DEFAULT_SERVICES.map(s=>s.name),...customServices];
   if(allNames.includes(name)){inp.value='';return;}
   customServices.push(name);
@@ -249,13 +275,11 @@ function addCustomService(){
   inp.value='';
   buildSvcGrid();
 }
-
 function removeCustomService(name){
   customServices=customServices.filter(s=>s!==name);
   selectedSvcs=selectedSvcs.filter(s=>s!==name);
   buildSvcGrid();
 }
-
 function buildSvcGrid(){
   const allServices=[...DEFAULT_SERVICES.map(s=>s.name),...customServices];
   document.getElementById('svc-grid').innerHTML=allServices.map(name=>{
@@ -263,18 +287,18 @@ function buildSvcGrid(){
     const isCustom=!def;
     const icon=def?def.icon:'ti-tag';
     const sel=selectedSvcs.includes(name);
-    const removeBtn=isCustom?`<button class="remove-svc" onclick="event.stopPropagation();removeCustomService('${name}')" aria-label="Remove"><i class="ti ti-x" style="font-size:10px;" aria-hidden="true"></i></button>`:'';
+    const removeBtn=isCustom?`<button class="remove-svc" onclick="event.stopPropagation();removeCustomService('${name}')"><i class="ti ti-x" style="font-size:10px;"></i></button>`:'';
     return`<div class="svc-chip${sel?' selected':''}${isCustom?' custom-chip':''}" onclick="toggleSvc('${name}',this)">
-      <i class="ti ${icon}" aria-hidden="true" style="font-size:12px;"></i>${name}${removeBtn}
+      <i class="ti ${icon}" style="font-size:12px;"></i>${name}${removeBtn}
     </div>`;
   }).join('');
 }
-
 function toggleSvc(name,el){
   if(el.classList.contains('selected')){selectedSvcs=selectedSvcs.filter(x=>x!==name);el.classList.remove('selected');}
   else{selectedSvcs.push(name);el.classList.add('selected');}
 }
 
+// ── Time conflict ─────────────────────────────────────────────
 function checkTimeConflict(){
   const val=document.getElementById('f-datetime').value;
   const warn=document.getElementById('warn-dt');
@@ -285,11 +309,12 @@ function checkTimeConflict(){
   let conflict=null;
   for(const r of others){if(Math.abs(chosen-new Date(r.datetime).getTime())<3600000){conflict=r;break;}}
   if(conflict){
-    warn.textContent=`⚠️ This time is within 1 hour of ${conflict.name}'s appointment (${fmtDt(conflict.datetime)}). Please choose a later time.`;
+    warn.textContent=`⚠️ Within 1 hour of ${conflict.name}'s appointment (${fmtDt(conflict.datetime)}).`;
     warn.style.display='block';timeBlocked=true;
-  } else {warn.style.display='none';timeBlocked=false;}
+  }else{warn.style.display='none';timeBlocked=false;}
 }
 
+// ── Modal ─────────────────────────────────────────────────────
 function openModal(id){
   editId=id||null;selectedSvcs=[];timeBlocked=false;
   const r=id?records.find(x=>x.id===id):null;
@@ -327,51 +352,81 @@ function saveRecord(){
   if(!dt){document.getElementById('err-dt').style.display='block';ok=false;}else{document.getElementById('err-dt').style.display='none';}
   if(!price||isNaN(price)||Number(price)<0){document.getElementById('err-price').style.display='block';ok=false;}else{document.getElementById('err-price').style.display='none';}
   if(!ok)return;
-  if(editId){const r=records.find(x=>x.id===editId);r.name=name;r.phone=phone;r.services=[...selectedSvcs];r.datetime=dt;r.price=Number(price);r.note=note;}
-  else records.push({id:uid(),name,phone,services:[...selectedSvcs],datetime:dt,price:Number(price),note,status:'pending'});
+  if(editId){
+    const r=records.find(x=>x.id===editId);
+    r.name=name;r.phone=phone;r.services=[...selectedSvcs];r.datetime=dt;r.price=Number(price);r.note=note;
+  } else {
+    records.push({id:uid(),name,phone,services:[...selectedSvcs],datetime:dt,price:Number(price),note,status:'pending',doneAt:null});
+  }
+  saveToStorage();
   closeModal();refreshAll();
 }
 
-function setStatus(id,status){const r=records.find(x=>x.id===id);if(r)r.status=status;refreshAll();}
+// ── Status & Delete ───────────────────────────────────────────
+function setStatus(id,status){
+  const r=records.find(x=>x.id===id);
+  if(!r)return;
+  r.status=status;
+  r.doneAt=(status==='done')?Date.now():null;
+  saveToStorage();
+  refreshAll();
+}
 
+function askDelete(id){
+  const r=records.find(x=>x.id===id);
+  if(!r)return;
+  deleteTargetId=id;
+  document.getElementById('confirm-msg').textContent=`Delete ${r.name}'s record? This cannot be undone.`;
+  document.getElementById('confirm-bg').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirm-bg').classList.remove('open');deleteTargetId=null;}
+function confirmDelete(){
+  if(!deleteTargetId)return;
+  records=records.filter(x=>x.id!==deleteTargetId);
+  saveToStorage();
+  closeConfirm();
+  refreshAll();
+}
+
+// ── Render Section 1 ──────────────────────────────────────────
 function renderS1(){
   const q=document.getElementById('search').value.toLowerCase();
-  const filtered=records.filter(r=>r.name.toLowerCase().includes(q)||r.phone.includes(q));
+  const now=Date.now();
+  let filtered=records.filter(r=>showInS1(r));
+  if(q)filtered=filtered.filter(r=>r.name.toLowerCase().includes(q)||r.phone.includes(q));
   const grid=document.getElementById('card-grid');
   document.getElementById('empty-s1').style.display=filtered.length?'none':'block';
   if(!filtered.length){grid.innerHTML='';return;}
   grid.innerHTML=filtered.map(r=>{
     const av=avatarColor(r.name);
     const doneBtn=r.status!=='done'
-      ?`<button class="act-btn done" onclick="setStatus('${r.id}','done')" aria-label="Mark as done"><i class="ti ti-check" aria-hidden="true" style="font-size:12px;"></i>Done</button>`
-      :`<button class="act-btn undone" onclick="setStatus('${r.id}','pending')" aria-label="Mark as pending"><i class="ti ti-check" aria-hidden="true" style="font-size:12px;"></i>Done</button>`;
-    const cancelBtn=r.status!=='cancelled'
-      ?`<button class="act-btn cancel-act" onclick="setStatus('${r.id}','cancelled')" aria-label="Cancel appointment"><i class="ti ti-x" aria-hidden="true" style="font-size:12px;"></i>Cancel</button>`
-      :`<button class="act-btn undone" onclick="setStatus('${r.id}','pending')" aria-label="Restore"><i class="ti ti-x" aria-hidden="true" style="font-size:12px;"></i>Cancel</button>`;
+      ?`<button class="act-btn done" onclick="setStatus('${r.id}','done')"><i class="ti ti-check" style="font-size:12px;"></i>Done</button>`
+      :`<button class="act-btn undone" onclick="setStatus('${r.id}','pending')"><i class="ti ti-rotate-clockwise" style="font-size:12px;"></i>Undo</button>`;
     return`<div class="customer-card status-${r.status}">
       <div class="card-top">
         <div class="card-identity">
           <div class="avatar" style="background:${av.bg};color:${av.color};">${initials(r.name)}</div>
-          <div><div class="card-name">${r.name}</div><div class="card-phone"><i class="ti ti-phone" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>${r.phone}</div></div>
+          <div><div class="card-name">${r.name}</div><div class="card-phone"><i class="ti ti-phone" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>${r.phone}</div></div>
         </div>
         ${statusPill(r.status)}
       </div>
       <div class="card-svcs">${r.services.map(s=>`<span class="badge">${s}</span>`).join('')}</div>
       <div class="card-meta">
-        <div class="meta-item"><span class="meta-label"><i class="ti ti-calendar" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:2px;"></i>Appointment</span><span class="meta-val">${fmtDt(r.datetime)}</span></div>
-        <div class="meta-item"><span class="meta-label"><i class="ti ti-currency-dollar" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:2px;"></i>Price</span><span class="meta-val meta-price">RM ${r.price.toFixed(2)}</span></div>
+        <div class="meta-item"><span class="meta-label"><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:2px;"></i>Appointment</span><span class="meta-val">${fmtDt(r.datetime)}</span></div>
+        <div class="meta-item"><span class="meta-label"><i class="ti ti-currency-dollar" style="font-size:11px;vertical-align:-1px;margin-right:2px;"></i>Price</span><span class="meta-val meta-price">RM ${r.price.toFixed(2)}</span></div>
       </div>
-      ${r.note?`<div class="card-note"><i class="ti ti-notes" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:4px;"></i>${r.note}</div>`:''}
+      ${r.note?`<div class="card-note"><i class="ti ti-notes" style="font-size:11px;vertical-align:-1px;margin-right:4px;"></i>${r.note}</div>`:''}
       <div class="card-actions">
         ${doneBtn}
-        ${cancelBtn}
-        <button class="act-btn" onclick="openModal('${r.id}')" aria-label="Edit"><i class="ti ti-edit" aria-hidden="true" style="font-size:12px;"></i>Edit</button>
-        <button class="act-btn" onclick="openModal()" aria-label="New appointment" style="white-space:nowrap;"><i class="ti ti-plus" aria-hidden="true" style="font-size:12px;"></i>New</button>
+        <button class="act-btn" onclick="openModal('${r.id}')"><i class="ti ti-edit" style="font-size:12px;"></i>Edit</button>
+        <button class="act-btn" onclick="openModal()" style="white-space:nowrap;"><i class="ti ti-plus" style="font-size:12px;"></i>New</button>
+        <button class="act-btn delete-act" onclick="askDelete('${r.id}')"><i class="ti ti-trash" style="font-size:12px;"></i>Delete</button>
       </div>
     </div>`;
   }).join('');
 }
 
+// ── Render Section 2 ──────────────────────────────────────────
 function populateFilters(){
   const phonesSeen=new Set(),svcsSeen=new Set();
   records.forEach(r=>{phonesSeen.add(r.phone+'||'+r.name);r.services.forEach(s=>svcsSeen.add(s));});
@@ -410,6 +465,7 @@ function renderS2(){
       <td style="font-weight:500;color:#0F6E56;font-size:12px;">RM ${r.price.toFixed(2)}</td>
       <td>${statusBadgeS2(r.status)}</td>
       <td style="font-size:12px;color:#6b7280;" title="${r.note||''}">${r.note||'—'}</td>
+      <td><button class="act-btn delete-act" style="width:100%;flex:unset;" onclick="askDelete('${r.id}')"><i class="ti ti-trash" style="font-size:12px;"></i></button></td>
     </tr>`).join('');
 }
 
@@ -429,15 +485,11 @@ function updateStats(){
 
 function refreshAll(){renderS1();populateFilters();renderS2();updateStats();}
 
-records=[
-  {id:uid(),name:'Sarah Lim',phone:'012-3456789',services:['Facial treatment','Skin whitening'],datetime:'2026-06-14T10:00',price:180,note:'Dry skin — use hydrating range',status:'done'},
-  {id:uid(),name:'Mei Ling Chan',phone:'016-8765432',services:['Lash extension'],datetime:'2026-06-14T14:30',price:120,note:'',status:'pending'},
-  {id:uid(),name:'Amy Wong',phone:'011-2233445',services:['Manicure','Eyebrow shaping'],datetime:'2026-06-15T11:00',price:95,note:'Thin nails — handle gently',status:'pending'},
-  {id:uid(),name:'Sarah Lim',phone:'012-3456789',services:['Deep cleansing'],datetime:'2026-05-20T10:00',price:80,note:'',status:'done'},
-  {id:uid(),name:'Mei Ling Chan',phone:'016-8765432',services:['Facial treatment','Hair removal'],datetime:'2026-05-10T15:00',price:160,note:'',status:'cancelled'},
-];
+// ── Init ──────────────────────────────────────────────────────
+loadFromStorage();
 refreshAll();
 document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target===document.getElementById('modal-bg'))closeModal();});
+document.getElementById('confirm-bg').addEventListener('click',e=>{if(e.target===document.getElementById('confirm-bg'))closeConfirm();});
 </script>
 </body>
 </html>
